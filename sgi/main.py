@@ -18,37 +18,49 @@ class Window(pyglet.window.Window):
         super(Window, self).__init__(WINDOW_WIDTH,
                                      WINDOW_HEIGHT, caption='SGI', *args, **kwargs)
 
+        # TODO: implement viewport and window objects
+
         self.batch = pyglet.graphics.Batch()
         self.__zoom = 10
-        self.button_zoom_in = self.__create_button_zoom_in()
-        self.button_zoom_out = self.__create_button_zoom_out()
+        self.button_zoom_in = TextButton(parent=self, label='Zoom+', width=90, y=WINDOW_HEIGHT -
+                                         GUI_PADDING, x=GUI_PADDING + 80, height=GUI_BUTTON_HEIGHT, on_press=self.__zoom_in)
+        self.button_zoom_out = TextButton(parent=self, label='Zoom-', width=90, y=WINDOW_HEIGHT - GUI_PADDING,
+                                          x=GUI_PADDING + 80 + 90 + GUI_PADDING, height=GUI_BUTTON_HEIGHT, on_press=self.__zoom_out)
         self.zoom_label = pyglet.text.Label('Zoom = {0}'.format(self.__zoom), color=(
             0, 0, 0, 255), x=GUI_PADDING, y=WINDOW_HEIGHT - GUI_PADDING, batch=self.batch)
+        self.move_up_button = TextButton(parent=self, label='Cima', width=64, y=WINDOW_HEIGHT -
+                                         3*GUI_PADDING, x=3*GUI_PADDING, height=GUI_BUTTON_HEIGHT, on_press=self.move_up)
+        self.move_left_button = TextButton(parent=self, label='Esquerda', width=64, y=WINDOW_HEIGHT -
+                                           4.5*GUI_PADDING, x=GUI_PADDING, height=GUI_BUTTON_HEIGHT, on_press=self.move_left)
+        self.move_right_button = TextButton(parent=self, label='Direita', width=64, y=WINDOW_HEIGHT -
+                                            4.5*GUI_PADDING, x=5*GUI_PADDING, height=GUI_BUTTON_HEIGHT, on_press=self.move_right)
+        self.move_down_button = TextButton(parent=self, label='Baixo', width=64, y=WINDOW_HEIGHT -
+                                           6*GUI_PADDING, x=3*GUI_PADDING, height=GUI_BUTTON_HEIGHT, on_press=self.move_down)
         self.widgets = [
             self.button_zoom_in,
-            self.button_zoom_out
+            self.button_zoom_out,
+            self.move_down_button,
+            self.move_up_button,
+            self.move_left_button,
+            self.move_right_button
         ]
         self.focus = None
 
-    def __create_button_zoom_in(self):
-        button = TextButton(self)
-        button.text = 'Zoom+'
-        button.width = 90
-        button.y = WINDOW_HEIGHT - GUI_PADDING
-        button.x = GUI_PADDING + 80
-        button.height = GUI_BUTTON_HEIGHT
-        button.on_press = self.__zoom_in
-        return button
+    def move_up(self):
+        # TODO: implement actual moving of window
+        print('Moving up')
 
-    def __create_button_zoom_out(self):
-        button = TextButton(self)
-        button.text = 'Zoom-'
-        button.width = 90
-        button.y = WINDOW_HEIGHT - GUI_PADDING
-        button.x = GUI_PADDING + 80 + 90 + GUI_PADDING
-        button.height = GUI_BUTTON_HEIGHT
-        button.on_press = self.__zoom_out
-        return button
+    def move_down(self):
+        # TODO: implement actual moving of window
+        print('Moving down')
+
+    def move_right(self):
+        # TODO: implement actual moving of window
+        print('Moving right')
+
+    def move_left(self):
+        # TODO: implement actual moving of window
+        print('Moving left')
 
     def zoom(self, value):
         self.__zoom += value
@@ -57,7 +69,7 @@ class Window(pyglet.window.Window):
 
     def __zoom_in(self):
         self.zoom(5)
-    
+
     def __zoom_out(self):
         self.zoom(-5)
 
